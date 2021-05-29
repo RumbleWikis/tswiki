@@ -22,7 +22,7 @@ export class RESTManager {
         body,
         headers: {
           "User-Agent": this.client.userAgent ?? "",
-          "cookie": options.cookie ?? "",
+          "Cookie": options.cookie ?? "",
         },
       }).then((response) => {
         if (!response.ok) reject(`${response.status} ${response.statusText}`);
