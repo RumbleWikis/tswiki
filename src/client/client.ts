@@ -4,7 +4,6 @@ import { MWError } from "../util/error.ts";
 
 export class Client {
   readonly auth: {
-    isAuthenticated: boolean;
     username: string;
     password: string;
     tokens: {
@@ -24,7 +23,6 @@ export class Client {
     if (!options.password) throw new MWError("No Password Provided");
 
     this.auth = {
-      isAuthenticated: false,
       username: options.username,
       password: options.password,
       tokens: {
@@ -43,7 +41,7 @@ export class Client {
       this.rest.queryRequest({
         params: {
           meta: "tokens",
-          type: token
+          type: token,
         }
       }).then(data => {
         const tokens = (data as TokenResponse).query.tokens;
@@ -70,7 +68,7 @@ export class Client {
           }
         }).then((response) => {
           // TO-DO: fix
-          console.log(JSON.stringify(response));
+          console.log(Deno.inspect(response))
           this.isAuthenticated = true;
           resolve(true);
         }, reject);

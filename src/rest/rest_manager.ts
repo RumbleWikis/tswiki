@@ -8,7 +8,7 @@ export class RESTManager {
     this.client = client;
   }
 
-  apiRequest(options: RequestOptions) {
+  apiRequest(options: RequestOptions): Promise<Record<string, any>> {
     return new Promise((resolve, reject) => {
       const RequestUrl = urlcat(this.client.apiUrl, {
         ...options.params,
