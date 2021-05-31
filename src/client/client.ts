@@ -1,6 +1,7 @@
 import { ClientOptions, TokenResponse } from "./typings.ts";
 import { RESTManager } from "../rest/rest_manager.ts";
 import { MWError } from "../util/error.ts";
+import toQuery from "../util/toQuery.ts";
 
 export class Client {
   readonly auth: {
@@ -61,16 +62,13 @@ export class Client {
           params: {
             action: "login"
           },
-          body: {
+          body: toQuery({
             lgname: this.auth.username,
             lgpassword: this.auth.password,
             lgtoken: token
-          }
+          })
         }).then((response) => {
-          // TO-DO: fix
-          console.log(Deno.inspect(response))
-          this.isAuthenticated = true;
-          resolve(true);
+          // TO-DO
         }, reject);
       }, reject);
     })

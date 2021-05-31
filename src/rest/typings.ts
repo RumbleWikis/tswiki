@@ -4,9 +4,8 @@ export interface RequestOptions {
   /** URL Request Parameters */
   params: Record<string, string>;
   /** Content Body (for non-GET requests) */
+  
   body?: any;
-  /** Cookie data */
-  cookie?: string;
 }
 
 export interface QueryRequestOptions {
