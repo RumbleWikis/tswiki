@@ -13,14 +13,14 @@ export interface ClientOptions {
 
 interface CommonQueryResponse {
   /** The cursor for the next page */
-  batchComplete: string,
+  batchComplete: string;
   /** Response from query */
-  query: Record<string, unknown>
+  query: Record<string, unknown>;
 }
 
 export interface TokenResponse extends CommonQueryResponse {
   query: {
     /** Record holding requested tokens */
-    tokens: Record<string, string>
-  }
+    tokens: Record<string, string>;
+  };
 }

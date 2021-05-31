@@ -1,4 +1,4 @@
-export class MWError extends Error {
+export default class MWError extends Error {
   constructor(message: string | undefined) {
     super(message);
     this.name = "MediaWikiError";

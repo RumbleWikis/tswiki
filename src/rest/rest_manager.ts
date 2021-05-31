@@ -1,6 +1,6 @@
 import type { Client } from "../client/client.ts";
 import { QueryRequestOptions, RequestOptions } from "./typings.ts";
-import { urlcat, CookieJar } from "../../deps.ts";
+import { CookieJar, urlcat } from "../../deps.ts";
 import toQuery from "../util/toQuery.ts";
 
 export class RESTManager {
@@ -19,7 +19,11 @@ export class RESTManager {
         format: "json",
       });
 
-      const body = (options.method == "GET") ? undefined : (Object.keys(options.body) ? toQuery(options.body) : (options.body ?? null));
+      const body = (options.method == "GET")
+        ? undefined
+        : (Object.keys(options.body)
+          ? toQuery(options.body)
+          : (options.body ?? null));
 
       fetch(RequestUrl, {
         method: options.method,
@@ -27,15 +31,16 @@ export class RESTManager {
         headers: {
           "User-Agent": this.client.userAgent ?? "",
           "Cookie": this.getCookie(),
-          "Content-Type": "application/x-www-form-urlencoded"
+          "Content-Type": "application/x-www-form-urlencoded",
         },
       }).then((response) => {
         if (!response.ok) reject(`${response.status} ${response.statusText}`);
 
-        for (const [header, value] of response.headers.entries())
+        for (const [header, value] of response.headers.entries()) {
           if (header === "set-cookie") this.cookie.setCookie(value);
+        }
 
-        response.json().then(resolve, reject)
+        response.json().then(resolve, reject);
       }, reject);
     });
   }
@@ -53,7 +58,9 @@ export class RESTManager {
   }
 
   getCookie(): string {
-    const cookies = this.cookie.cookies.map(cookie => `${encodeURIComponent(cookie.name!)}=${encodeURIComponent(cookie.value!)}`);
+    const cookies = this.cookie.cookies.map((cookie) =>
+      `${encodeURIComponent(cookie.name!)}=${encodeURIComponent(cookie.value!)}`
+    );
     return cookies.join("; ");
   }
 }
