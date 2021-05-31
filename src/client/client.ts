@@ -62,13 +62,14 @@ export class Client {
           params: {
             action: "login"
           },
-          body: toQuery({
+          body: {
             lgname: this.auth.username,
             lgpassword: this.auth.password,
             lgtoken: token
-          })
+          }
         }).then((response) => {
           // TO-DO
+          console.log(response);
         }, reject);
       }, reject);
     })

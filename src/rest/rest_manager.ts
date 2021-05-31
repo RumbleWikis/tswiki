@@ -1,6 +1,7 @@
 import type { Client } from "../client/client.ts";
 import { QueryRequestOptions, RequestOptions } from "./typings.ts";
 import { urlcat, CookieJar } from "../../deps.ts";
+import toQuery from "../util/toQuery.ts";
 
 export class RESTManager {
   client: Client;
@@ -18,7 +19,7 @@ export class RESTManager {
         format: "json",
       });
 
-      const body = (options.method == "GET") ? undefined : (options.body ?? null);
+      const body = (options.method == "GET") ? undefined : (Object.keys(options.body) ? toQuery(options.body) : (options.body ?? null));
 
       fetch(RequestUrl, {
         method: options.method,
@@ -53,8 +54,6 @@ export class RESTManager {
 
   getCookie(): string {
     const cookies = this.cookie.cookies.map(cookie => `${encodeURIComponent(cookie.name!)}=${encodeURIComponent(cookie.value!)}`);
-
-    console.log(cookies.join("; "));
     return cookies.join("; ");
   }
 }
